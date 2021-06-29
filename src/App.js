@@ -25,6 +25,7 @@ class App extends Component {
       localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
     }
   }
+
   addContact = ({ name, number }) => {
     if (this.state.contacts.find((contact) => contact.name === name)) {
       alert(`${name} already exist`);
