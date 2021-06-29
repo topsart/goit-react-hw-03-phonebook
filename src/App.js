@@ -11,6 +11,20 @@ class App extends Component {
     filter: "",
   };
 
+  componentDidMount() {
+    const contacts = localStorage.getItem("contacts");
+    const parsedContacts = JSON.parse(contacts);
+
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contact) {
+      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+    }
+  }
   addContact = ({ name, number }) => {
     if (this.state.contacts.find((contact) => contact.name === name)) {
       alert(`${name} already exist`);
@@ -48,21 +62,6 @@ class App extends Component {
       contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
-
-  componentDidMount() {
-    const contacts = localStorage.getItem("contacts");
-    const parsedContacts = JSON.parse(contacts);
-
-    if (parsedContacts) {
-      this.setState({ contacts: parsedContacts });
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.contacts !== prevState.contact) {
-      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
-    }
-  }
 
   render() {
     const { filter } = this.state;
